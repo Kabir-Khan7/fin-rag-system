@@ -9,9 +9,11 @@ venv/
 __pycache__/
 *.py[cod]
 *.pyc
+*.pyo
 
 # uv
 .uv/
+uv.lock
 
 # IDE
 .vscode/
@@ -23,3 +25,4 @@ Thumbs.db
 
 # Logs
 *.log
+logs/

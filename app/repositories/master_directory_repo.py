@@ -28,7 +28,12 @@ class MasterDirectoryRepository:
 
     def get_all(self, skip: int = 0, limit: int = 100) -> list[MasterDirectory]:
         """Retrieve a paginated list of records."""
-        stmt = select(MasterDirectory).offset(skip).limit(limit)
+        stmt = (
+            select(MasterDirectory)
+            .order_by(MasterDirectory.id)
+            .offset(skip)
+            .limit(limit)
+        )
         return list(self.db.execute(stmt).scalars().all())
 
     def get_by_id(self, record_id: int) -> MasterDirectory | None:

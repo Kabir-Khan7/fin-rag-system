@@ -29,8 +29,13 @@ class TransactionRepository:
         return obj
 
     def get_all(self, skip: int = 0, limit: int = 100) -> list[Transaction]:
-        """Retrieve a paginated list of subledger records."""
-        stmt = select(Transaction).offset(skip).limit(limit)
+        """Retrieve a paginated list of subledger records, ordered by id."""
+        stmt = (
+            select(Transaction)
+            .order_by(Transaction.id)  # Required by SQL Server for OFFSET/LIMIT
+            .offset(skip)
+            .limit(limit)
+        )
         return list(self.db.execute(stmt).scalars().all())
 
     def get_by_id(self, record_id: int) -> Transaction | None:

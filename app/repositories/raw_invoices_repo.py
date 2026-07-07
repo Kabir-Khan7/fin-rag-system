@@ -28,7 +28,12 @@ class RawInvoiceRepository:
 
     def get_all(self, skip: int = 0, limit: int = 100) -> list[RawInvoice]:
         """Retrieve a paginated list of records."""
-        stmt = select(RawInvoice).offset(skip).limit(limit)
+        stmt = (
+            select(RawInvoice)
+            .order_by(RawInvoice.id)
+            .offset(skip)
+            .limit(limit)
+        )
         return list(self.db.execute(stmt).scalars().all())
 
     def get_by_id(self, record_id: int) -> RawInvoice | None:

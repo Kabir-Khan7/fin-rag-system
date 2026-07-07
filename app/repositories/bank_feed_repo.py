@@ -28,7 +28,12 @@ class BankFeedRepository:
 
     def get_all(self, skip: int = 0, limit: int = 100) -> list[BankFeed]:
         """Retrieve a paginated list of bank feed records."""
-        stmt = select(BankFeed).offset(skip).limit(limit)
+        stmt = (
+            select(BankFeed)
+            .order_by(BankFeed.id)
+            .offset(skip)
+            .limit(limit)
+        )
         return list(self.db.execute(stmt).scalars().all())
 
     def get_by_id(self, record_id: int) -> BankFeed | None:

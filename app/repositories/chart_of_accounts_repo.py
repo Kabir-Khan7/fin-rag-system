@@ -28,7 +28,12 @@ class ChartOfAccountsRepository:
 
     def get_all(self, skip: int = 0, limit: int = 100) -> list[ChartOfAccounts]:
         """Retrieve a paginated list of records."""
-        stmt = select(ChartOfAccounts).offset(skip).limit(limit)
+        stmt = (
+            select(ChartOfAccounts)
+            .order_by(ChartOfAccounts.id)
+            .offset(skip)
+            .limit(limit)
+        )
         return list(self.db.execute(stmt).scalars().all())
 
     def get_by_id(self, record_id: int) -> ChartOfAccounts | None:

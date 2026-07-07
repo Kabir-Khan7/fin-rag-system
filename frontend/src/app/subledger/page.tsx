@@ -3,12 +3,15 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+
+
 import { apiGet, apiPost, apiDelete } from "@/lib/api";
 import type { SubledgerCreate, SubledgerResponse } from "@/types/subledger";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
+import { BulkUpload } from "@/components/BulkUpload";
 import {
   Table,
   TableBody,
@@ -158,6 +161,16 @@ export default function SubledgerPage() {
           </Button>
         </div>
       </Card>
+      {/* Bulk Upload */}
+      <BulkUpload
+        uploadPath="/api/v1/transactions/upload"
+        onSuccess={loadRecords}
+        expectedColumns={[
+          "Transaction_ID", "System_Timestamp", "Document_Date",
+          "GL_Account_Code", "Entity_ID", "Amount",
+          "Transaction_Type", "Status", "Description",
+        ]}
+      />
 
       <Card className="p-6">
         <h2 className="text-lg font-semibold mb-4">

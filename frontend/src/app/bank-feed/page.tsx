@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
+import { BulkUpload } from "@/components/BulkUpload";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
@@ -119,6 +120,15 @@ export default function BankFeedPage() {
           </Button>
         </div>
       </Card>
+      {/* Bulk Upload */}
+      <BulkUpload
+        uploadPath="/api/v1/bank-feed/upload"
+        onSuccess={loadRecords}
+        expectedColumns={[
+          "Bank_Row_ID", "Booking_Date", "Value_Date",
+          "Transaction_Text_Narrative", "Amount", "Running_Balance",
+        ]}
+      />
       <Card className="p-6">
         <h2 className="text-lg font-semibold mb-4">Recent Records ({records.length})</h2>
         <div className="overflow-x-auto">

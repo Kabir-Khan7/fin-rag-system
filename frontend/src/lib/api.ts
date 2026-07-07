@@ -38,3 +38,14 @@ export async function apiDelete(path: string): Promise<void> {
   const res = await fetch(`${API_URL}${path}`, { method: "DELETE" });
   return handle<void>(res, path, "DELETE");
 }
+
+export async function apiUpload<T>(path: string, file: File): Promise<T> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch(`${API_URL}${path}`, {
+    method: "POST",
+    body: formData, // NOTE: no Content-Type header — the browser sets it with the boundary
+  });
+  return handle<T>(res, path, "POST");
+}

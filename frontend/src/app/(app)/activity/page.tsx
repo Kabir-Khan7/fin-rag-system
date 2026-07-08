@@ -11,51 +11,55 @@ export default function ActivityPage() {
   const { entries, clearActivity } = useActivity();
 
   return (
-    <main className="max-w-6xl mx-auto p-8 space-y-6">
-      <div className="flex items-center justify-between">
+    <main className="max-w-6xl mx-auto px-8 py-10 space-y-8">
+      <header className="border-b border-rule pb-5 flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Activity Log</h1>
-          <p className="text-slate-500 mt-1">
-            Actions performed during this session
+          <p className="font-mono text-xs uppercase tracking-widest text-ledger mb-1">
+            System
+          </p>
+          <h1 className="font-display text-3xl text-ink">Activity Log</h1>
+          <p className="text-slatetext mt-1">
+            Actions recorded during this session.
           </p>
         </div>
-        <Button variant="outline" onClick={clearActivity} disabled={entries.length === 0}>
-          Clear Log
+        <Button
+          variant="outline"
+          onClick={clearActivity}
+          disabled={entries.length === 0}
+          className="border-rule"
+        >
+          Clear log
         </Button>
-      </div>
+      </header>
 
-      <Card className="p-6">
+      <Card className="p-6 bg-surface border-rule">
         {entries.length === 0 ? (
-          <p className="text-slate-400 text-center py-8">
-            No activity yet. Create, upload, or delete a record to see it logged here.
+          <p className="text-slatetext text-center py-12">
+            Nothing logged yet. Create, upload, or remove a record and it appears here.
           </p>
         ) : (
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Time</TableHead>
-                <TableHead>Action</TableHead>
-                <TableHead>Resource</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Detail</TableHead>
+                <TableHead className="font-mono text-xs uppercase tracking-wider">Time</TableHead>
+                <TableHead className="font-mono text-xs uppercase tracking-wider">Action</TableHead>
+                <TableHead className="font-mono text-xs uppercase tracking-wider">Resource</TableHead>
+                <TableHead className="font-mono text-xs uppercase tracking-wider">Status</TableHead>
+                <TableHead className="font-mono text-xs uppercase tracking-wider">Detail</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {entries.map((e) => (
                 <TableRow key={e.id}>
-                  <TableCell className="text-sm text-slate-500">{e.timestamp}</TableCell>
+                  <TableCell className="font-mono text-xs text-slatetext">{e.timestamp}</TableCell>
                   <TableCell className="font-medium">{e.action}</TableCell>
                   <TableCell>{e.resource}</TableCell>
                   <TableCell>
-                    <span
-                      className={
-                        e.status === "success" ? "text-green-600" : "text-red-600"
-                      }
-                    >
-                      {e.status}
+                    <span className={`font-mono text-xs ${e.status === "success" ? "text-credit" : "text-debit"}`}>
+                      {e.status === "success" ? "● success" : "● error"}
                     </span>
                   </TableCell>
-                  <TableCell className="max-w-[300px] truncate">{e.detail}</TableCell>
+                  <TableCell className="max-w-[320px] truncate text-slatetext">{e.detail}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

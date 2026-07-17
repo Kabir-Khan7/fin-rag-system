@@ -41,6 +41,9 @@ class Settings(BaseSettings):
     # Embedding model settings (config-driven — swap model + dim together)
     EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
     EMBEDDING_DIM: int = 384
+    
+    # Agent LLM settings
+    AGENT_MODEL: str = "qwen3:4b"
 
     # Tells pydantic-settings to read from the .env file
     model_config = SettingsConfigDict(

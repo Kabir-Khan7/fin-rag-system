@@ -21,7 +21,7 @@ def main() -> None:
 
         result = app.invoke(
             {"messages": [HumanMessage(content=question)],
-             "iteration": 0, "escalations": []},
+             "iteration": 0, "facts": []},
             config=config,
         )
         print(f"AI CFO: {result['final_answer']}")
